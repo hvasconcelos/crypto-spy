@@ -1,43 +1,35 @@
-import { useEffect, useState } from 'react';
 import config from './config';
 import useFetch from 'use-http';
 import { PriceInfo } from './App';
 
+import useAPIPolling, { APIPollingOptions } from 'use-api-polling'
 
 export const useGetPrices = (currencies: string[], convertTo: string, refreshInterval: number) => {
-  const [prices, setPrices] = useState<PriceInfo[]>([]);
+
   const { get, loading = false, error } = useFetch(
-    'https://api.coingecko.com',
+    `https://api.coingecko.com`,
     {}, []);
 
-  useEffect(() => {
+  const fetchFunc = async () => {
     const currenciesReq = currencies.join(",");
-    const vscurrenciesReq = currencies.map(() => convertTo).join(",");
+    const vscurrenciesReq = currencies.map(() => convertTo).join(","); 
     const url = `/api/v3/simple/price?vs_currencies=${vscurrenciesReq}&ids=${currenciesReq}&include_market_cap=true&include_24hr_change=true`;
-
-    const retryFunc = () => {
-      get(url)
-        .then(getRet => {
-          if(getRet) {         
-            const res = Object.keys(getRet).map((key) => {
-              const [coin] = config.coins.filter((coinItem) => coinItem.id === key);
-              return {
-                ...getRet[key],
-                ...coin,
-              };
-            });
-            res.sort((a, b) => a.symbol.localeCompare(b.symbol))
-            //setTimeout(retryFunc, refreshInterval);  
-            setPrices(res);
-          }           
-                                        
-        });    
-    };
-    retryFunc();
-    const timer = setTimeout(retryFunc, refreshInterval);    
-    console.log("Rendering");
-    return () => clearTimeout(timer);
-  }, []);
-
+    const data = await get(url);
+    return Object.keys(data).map((key) => {
+      const [coin] = config.coins.filter((coinItem) => coinItem.id === key);
+      return {
+        ...data[key],
+        ...coin,
+      };
+    });
+  }
+  const options: APIPollingOptions<PriceInfo[]> = {
+    fetchFunc,
+    initialState: [],
+    delay: refreshInterval
+  }
+  const prices = useAPIPolling(options);
+  prices.sort((a, b) => a.symbol.localeCompare(b.symbol))
   return { prices, loading, error };
+
 };
