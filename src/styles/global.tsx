@@ -1,11 +1,21 @@
-import React from 'react';
-import styled from 'styled-components';
+import { createGlobalStyle } from "styled-components";
+interface GlobalStylesProps {
+  whiteColor?: boolean;
+}
 
-export const BaseLayout = styled.div`
-  display: flex;
-  flex-direction: column;
-  background-color: #222;
-  justify-content: space-between;
-  height: 100%;
+export const GlobalStyle = createGlobalStyle<GlobalStylesProps>`
+  html {
+    box-sizing: border-box;
+  }
+
+  *, *::before, *::after {
+    box-sizing: inherit;
+  }
+
+  body {
+    margin: 0;
+    font-family: 'Noto Sans Mono', Verdana, Arial, Helvetica, monospace;
+    /* background-color: ${(props) =>
+      props.whiteColor ? "green" : "black"}; */
+  }
 `;
-
