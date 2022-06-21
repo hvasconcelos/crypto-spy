@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import './App.css';
 import config from './config';
 import PricePage from "./components/prices-page";
+import SettingsPage from "./components/settings-page";
 import Footer from "./components/footer";
 import NavBar from "./components/nav-bar";
 import {BaseLayout} from "./styles/global";
@@ -24,6 +25,10 @@ function App() {
           refreshDelay={60000}
           onUpdate={()=> setUpdatedAt(new Date())}
           onLoading={(isLoading)=>setLoading(isLoading)}
+        />
+      )}
+      {page === "SETTINGS" && (
+        <SettingsPage          
         />
       )}
       <Footer loading={loading} lastUpdate={updatedAt} />             

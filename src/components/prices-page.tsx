@@ -23,6 +23,11 @@ const CoinItem = styled.div<CoinItemProps>`
   border-bottom: 1px solid #444;
   background-color: #333;
   padding: 10px;
+  &:hover {
+    background-color: #222; 
+    border-right: 1px solid #555;
+    border-bottom: 1px solid #555;
+  }
 `;
 
 const CoinSymbol = styled.h2`
