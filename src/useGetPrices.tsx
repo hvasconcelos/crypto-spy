@@ -1,4 +1,4 @@
-import config from "./config";
+import { coins } from "./config";
 import useFetch from "use-http";
 import useAPIPolling, { APIPollingOptions } from "use-api-polling";
 
@@ -29,7 +29,7 @@ export const useGetPrices = (
     const data = await get(url);
 
     return Object.keys(data).map((key) => {
-      const [coin] = config.coins.filter((coinItem) => coinItem.id === key);
+      const [coin] = coins.filter((coinItem) => coinItem.id === key);
       return {
         ...data[key],
         ...coin,

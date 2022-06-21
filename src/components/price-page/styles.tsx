@@ -1,53 +1,111 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
+import { rem } from "polished";
+import { colors, typography } from "../../styles/design-tokens";
 
-interface PricePageProps {
-  perc?: number;
-  change?: number;
-}
+const { bold } = typography;
+const { light, grey, green, red, background, backgroundShadow } = colors;
 
-export const CoinGrid = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  background-color: #fff;
+export const CoinGrid = styled.div<{ items: number }>`
+  /* border: 2px solid red; */
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr;
+  grid-gap: ${rem("10px")};
+  padding: ${rem("10px")};
 
-  > * {
-    flex: 1 1 180px;
+  > div {
+    /* border: 1px solid red; */
+  }
+
+  ${(props) =>
+    props.items === 2 &&
+    css`
+      grid-template-columns: 1fr;
+      grid-template-rows: repeat(2, 1fr);
+    `}
+
+  ${(props) =>
+    props.items === 3 &&
+    css`
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-rows: 1fr;
+    `}
+
+  ${(props) =>
+    props.items === 4 &&
+    css`
+      grid-template-columns: repeat(2, 1fr);
+      grid-template-rows: repeat(2, 1fr);
+    `}
+
+  ${(props) =>
+    props.items === 5 &&
+    css`
+      grid-template-columns: repeat(5, 1fr);
+      grid-template-rows: 1fr;
+    `}
+
+  ${(props) =>
+    props.items === 6 &&
+    css`
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-rows: repeat(2, 1fr);
+    `}
+
+  ${(props) =>
+    props.items === 7 &&
+    css`
+      grid-template-columns: repeat(4, 1fr);
+      grid-template-rows: repeat(2, 1fr);
+    `}
+
+  ${(props) =>
+    props.items === 8 &&
+    css`
+      grid-template-columns: repeat(4, 1fr);
+      grid-template-rows: repeat(2, 1fr);
+    `}
+`;
+
+export const CoinItem = styled.div`
+  /* border: 1px solid blue; */
+
+  > div {
+    width: 100%;
+    height: 100%;
+    background-color: ${backgroundShadow};
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    /* text-align: center; */
+    /* flex: 1; */
+    /* height: 100%; */
+
+    h2 {
+      margin-bottom: ${rem("10px")};
+      color: ${grey};
+      line-height: 1;
+    }
   }
 `;
 
-export const CoinItem = styled.div<PricePageProps>`
-  width: 180px;
-  height: 100px;
-  border-right: 1px solid red;
-  border-bottom: 1px solid blue;
-  background-color: white;
-  padding: 10px;
-`;
+export const CoinValue = styled.div<{ perc: number }>`
+  span {
+    display: block;
+    line-height: 1;
 
-export const CoinSymbol = styled.h2`
-  font-size: 1rem;
-  margin-bottom: 0px;
-  font-weight: 700;
-  color: #999;
-`;
+    &.price {
+      margin-bottom: ${rem("5px")};
+      font-weight: ${bold};
+      color: ${light};
+    }
 
-export const CoinPrice = styled.h3`
-  margin-top: 5px;
-  font-size: 1.2rem;
-  font-weight: 700;
-  color: blue;
-  margin-bottom: 5px;
-`;
-
-export const CoinChangeLabel = styled.span`
-  font-weight: 600;
-  color: yellow;
-  margin-left: 5px;
-  font-size: 0.9rem;
-`;
-
-export const CoinChange = styled.span<PricePageProps>`
-  color: ${(props) => (props.perc && props.perc > 0 ? "green" : "red")};
-  font-weight: 600;
-  font-size: 0.9rem;
+    &.percentage {
+      font-size: ${rem("12px")};
+      color: ${(props) => (props.perc && props.perc > 0 ? green : red)};
+    }
+  }
 `;

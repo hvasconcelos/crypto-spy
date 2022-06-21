@@ -1,15 +1,15 @@
 import { useState } from "react";
-import config from "./config";
+import { coins } from "./config";
 // import NavBar from "./components/nav-bar";
 import PricePage from "./components/price-page";
-import Footer from "./components/footer";
+// import Footer from "./components/footer";
 import "./styles/global.css";
 
 function App() {
   const [page, setPage] = useState("PRICES");
   const [updatedAt, setUpdatedAt] = useState<Date>(new Date());
   const [loading, setLoading] = useState(false);
-  const currenciesConfig = config.coins.map((cur) => cur.id);
+  const currenciesConfig = coins.map((cur) => cur.id);
 
   return (
     <>

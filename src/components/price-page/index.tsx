@@ -3,8 +3,6 @@ import { useGetPrices } from "../../useGetPrices";
 import * as Styles from "./styles";
 
 interface PricePageProps {
-  perc?: number;
-  change?: number;
   currencies: string[];
   baseCurrency: string;
   refreshDelay: number;
@@ -31,23 +29,23 @@ const PricePage = (props: PricePageProps) => {
   }
 
   return (
-    <Styles.CoinGrid>
+    <Styles.CoinGrid items={prices.length}>
       {prices &&
         prices.map((price, index) => (
-          <Styles.CoinItem
-            key={index}
-            change={Number.parseInt(price.eur_24h_change.toFixed(2))}
-          >
-            <Styles.CoinSymbol>{price.symbol}</Styles.CoinSymbol>
-            <Styles.CoinPrice>
-              {price.eur.toFixed(price.decimals)} €
-            </Styles.CoinPrice>
-            <Styles.CoinChange
-              perc={Number.parseInt(price.eur_24h_change.toFixed(2))}
-            >
-              {price.eur_24h_change.toFixed(2)}%
-            </Styles.CoinChange>
-            <Styles.CoinChangeLabel>24h</Styles.CoinChangeLabel>
+          <Styles.CoinItem key={index}>
+            <div>
+              <h2>{price.symbol}</h2>
+              <Styles.CoinValue
+                perc={Number.parseInt(price.eur_24h_change.toFixed(2))}
+              >
+                <span className="price">
+                  {price.eur.toFixed(price.decimals)}€
+                </span>
+                <span className="percentage">
+                  {price.eur_24h_change.toFixed(2)}%
+                </span>
+              </Styles.CoinValue>
+            </div>
           </Styles.CoinItem>
         ))}
     </Styles.CoinGrid>
