@@ -1,8 +1,18 @@
 import config from './config';
 import useFetch from 'use-http';
-import { PriceInfo } from './App';
 
 import useAPIPolling, { APIPollingOptions } from 'use-api-polling'
+
+
+export interface PriceInfo {
+  id: string;
+  symbol: string;
+  number: 0;
+  eur: number;
+  eur_24h_change: number;
+  decimals: number;
+}
+
 
 export const useGetPrices = (currencies: string[], convertTo: string, refreshInterval: number) => {
 

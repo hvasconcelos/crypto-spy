@@ -2,64 +2,9 @@ import React, {useState} from 'react';
 import './App.css';
 import styled from 'styled-components';
 import config from './config';
-import { useGetPrices } from './useGetPrices';
 import {Button, Spinner, Icon} from "@taikai/rocket-kit";
-const CoinGrid = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  background-color: #222;
+import PricePage from "./components/prices-page";
 
-  >* {
-    flex: 1 1 180px;
-  }
-`;
-
-interface CoinItemProps {
-  change: number;
-}
-
-const CoinItem = styled.div<CoinItemProps>`
-  width: 180px;
-  height: 100px;
-  border-right: 1px solid #444;
-  border-bottom: 1px solid #444;
-  background-color: #333;
-  padding: 10px;
-`;
-
-const CoinSymbol = styled.h2`
-  font-size: 1.0rem;
-  margin-bottom: 0px;
-  font-weight: 700;
-  color: #999;
-`;
-
-const CoinPrice = styled.h3`
-  margin-top: 5px;
-  font-size: 1.2rem;
-  font-weight: 700;
-  color: #DDD;
-  margin-bottom: 5px;
-`;
-
-
-const CoinChangeLabel = styled.span`
-  font-weight: 600;
-  color: #666;
-  margin-left: 5px;
-  font-size: 0.9rem;
-`;
-
-
-interface CoinChangeProps {
-  perc: number;
-}
-
-const CoinChange = styled.span<CoinChangeProps>`
-  color: ${(props: CoinChangeProps)=> props.perc > 0 ? "green": "red"};
-  font-weight: 600;
-  font-size: 0.9rem;
-`;
 
 const BaseLayout = styled.div`
   display: flex;
@@ -86,7 +31,7 @@ font-weight: 400;
 margin-left: 5px;
 `;
 
-const Header = styled.div`
+const NavBar = styled.div`
   text-align: right;
   width: 100%;
   background-color: #444;
@@ -107,26 +52,20 @@ export const IconStyle = styled.div`
   top: 3px;
 `;
 const PricePower = styled.span`
-font-weight: 600;
+    font-weight: 600;
 `;
 
-export interface PriceInfo {
-  id: string,
-  symbol: string,
-  number: 0,
-  eur: number,
-  eur_24h_change: number,
-  decimals: number
-}
 
 function App() {
-  const currenciesConfig = config.coins.map((cur) => cur.id);
+ 
   const [page, setPage] = useState("PRICES");
-  const {prices = [], loading= false} = useGetPrices(currenciesConfig, "eur", 60000);
+  const [updatedAt, setUpdatedAt] = useState<Date>(new Date());
+  const [loading, setLoading] = useState(false);
+  const currenciesConfig = config.coins.map((cur) => cur.id);
   return (
     <div className="App" >
       <BaseLayout>
-      <Header>
+      <NavBar>
       <Button
           ariaLabel="Dummie Button"
           className="button"
@@ -156,24 +95,26 @@ function App() {
           }}
         />
        
-      </Header>
+      </NavBar>
       {page === "PRICES" && (
-        <CoinGrid>            
-        {prices && prices.map((price) => (
-          <CoinItem change={Number.parseInt(price.eur_24h_change.toFixed(2))}>
-          <CoinSymbol>{price.symbol}</CoinSymbol>
-          <CoinPrice>{price.eur.toFixed(price.decimals)} €</CoinPrice>                    
-          <CoinChange perc={Number.parseInt(price.eur_24h_change.toFixed(2))}>{price.eur_24h_change.toFixed(2)}%</CoinChange>    
-          <CoinChangeLabel>24h</CoinChangeLabel>
-          </CoinItem> 
-        ))}       
-        </CoinGrid> 
+        <PricePage 
+          currencies={currenciesConfig}
+          baseCurrency="eur"
+          refreshDelay={60000}
+          onUpdate={()=> setUpdatedAt(new Date())}
+          onLoading={(isLoading)=>setLoading(isLoading)}
+        />
       )}
-
       <Footer>
-        {loading && <Spinner fill="#939393" size="5px"/>}
-        {!loading && <LastUpdate><IconStyle><Icon fill="#888" icon="info" /></IconStyle>{new Date().toLocaleString()}</LastUpdate>}
-        <PricePower>Powered by TAIKAI <IconStyle><Icon fill="#888" icon="taikai-mark" /></IconStyle> </PricePower>
+        {!loading &&<LastUpdate>
+          <IconStyle>
+            <Icon fill="#888" icon="info" />
+            </IconStyle>
+            {updatedAt.toLocaleString()}
+        </LastUpdate>
+        }
+        { loading && <Spinner fill="#939393" size="5px"/>}
+        <PricePower>Powered by TAIKAI Labs&nbsp;<IconStyle><Icon fill="#888" icon="taikai-mark" /></IconStyle> </PricePower>
       </Footer>
       </BaseLayout>     
     </div>
