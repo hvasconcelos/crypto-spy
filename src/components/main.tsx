@@ -12,11 +12,11 @@ const Main = () => {
   const [updatedAt, setUpdatedAt] = useState<Date>(new Date());
   const [loading, setLoading] = useState(false);
   const currenciesConfig = coins.map((cur) => cur.id);
-  const { theme } = useContext(SettingsContext);
+  // const { theme } = useContext(SettingsContext);
 
   return (
     <>
-      <NavBar onChangePage={(newPage) => setPage(newPage)} />
+      {/* <NavBar onChangePage={(newPage) => setPage(newPage)} /> */}
       {page === "PRICES" && (
         <PricePage
           currencies={currenciesConfig}
