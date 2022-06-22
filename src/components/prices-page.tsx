@@ -1,6 +1,9 @@
-import React, { useEffect} from "react";
+import React, { useEffect, useContext} from "react";
 import styled from "styled-components";
-import { useGetPrices } from "../useGetPrices";
+import { useGetPrices } from "../hooks/useGetPrices";
+import { Theme } from "../schema";
+import SettingsContext from "../settings";
+import Themes from "../themes";
 
 const CoinGrid = styled.div`
   display: flex;
@@ -12,36 +15,36 @@ const CoinGrid = styled.div`
   }
 `;
 
-interface CoinItemProps {
+
+interface ThemeProps {
+    theme: Theme;
+  }
+
+interface CoinItemProps extends ThemeProps {
   change: number;
 }
 
 const CoinItem = styled.div<CoinItemProps>`
   width: 180px;
   height: 100px;
-  border-right: 1px solid #444;
-  border-bottom: 1px solid #444;
-  background-color: #333;
+  border-right: 1px solid ${({theme})=> Themes[theme].itemBackgroundBorder};
+  border-bottom: 1px solid ${({theme})=> Themes[theme].itemBackgroundBorder};
+  background-color: ${({theme})=> Themes[theme].itemBackgroundColor};
   padding: 10px;
-  &:hover {
-    background-color: #222; 
-    border-right: 1px solid #555;
-    border-bottom: 1px solid #555;
-  }
 `;
 
-const CoinSymbol = styled.h2`
+const CoinSymbol = styled.h2<ThemeProps>`
   font-size: 1rem;
   margin-bottom: 0px;
   font-weight: 700;
-  color: #999;
+  color: ${({theme})=> Themes[theme].symbolColor};
 `;
 
-const CoinPrice = styled.h3`
+const CoinPrice = styled.h3<ThemeProps>`
   margin-top: 5px;
   font-size: 1.2rem;
   font-weight: 700;
-  color: #ddd;
+  color: ${({theme})=> Themes[theme].priceColor};
   margin-bottom: 5px;
 `;
 
@@ -71,6 +74,7 @@ interface PricePageProps {
 }
 
 const PricePage = (props: PricePageProps) => {
+  const { theme } = useContext(SettingsContext);
   const { currencies, onUpdate, baseCurrency, refreshDelay, onLoading} = props;
   const { prices = [], loading = false } = useGetPrices(
     currencies,
@@ -90,9 +94,9 @@ const PricePage = (props: PricePageProps) => {
     <CoinGrid>
       {prices &&
         prices.map((price) => (
-          <CoinItem change={Number.parseInt(price.eur_24h_change.toFixed(2))}>
-            <CoinSymbol>{price.symbol}</CoinSymbol>
-            <CoinPrice>{price.eur.toFixed(price.decimals)} €</CoinPrice>
+          <CoinItem theme={theme} change={Number.parseInt(price.eur_24h_change.toFixed(2))}>
+            <CoinSymbol theme={theme}>{price.symbol}</CoinSymbol>
+            <CoinPrice theme={theme}>{price.eur.toFixed(price.decimals)} €</CoinPrice>
             <CoinChange perc={Number.parseInt(price.eur_24h_change.toFixed(2))}>
               {price.eur_24h_change.toFixed(2)}%
             </CoinChange>

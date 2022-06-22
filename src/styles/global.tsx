@@ -1,9 +1,15 @@
 import styled from 'styled-components';
+import Themes from "../themes";
+import { Theme } from "../schema";
 
-export const BaseLayout = styled.div`
+interface ThemeProps {
+  theme: Theme;
+}
+
+export const BaseLayout = styled.div<ThemeProps>`
   display: flex;
   flex-direction: column;
-  background-color: #222;
+  background-color: ${({theme})=> Themes[theme].backgroundColor};
   justify-content: space-between;
   height: 100%;
 `;

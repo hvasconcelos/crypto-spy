@@ -1,6 +1,13 @@
-import React from "react";
+import React, {useContext} from "react";
 import { Spinner, Icon } from "@taikai/rocket-kit";
 import styled from "styled-components";
+import SettingsContext from "../settings";
+import { Theme } from "../schema";
+import Themes from "../themes";
+
+interface ThemeProps {
+    theme: Theme;
+  }
 
 const PricePower = styled.span`
   font-weight: 600;
@@ -29,21 +36,22 @@ interface FooterProps {
   lastUpdate: Date;
 }
 
-const FooterContainer = styled.div`
+const FooterContainer = styled.div<ThemeProps>`
   height: 25px;
-  border-top: 1px solid #555;
-  background-color: #444;
+  border-top: 1px solid ${({theme})=> Themes[theme].footerBorderColor};
+  background-color: ${({theme})=> Themes[theme].footerBackgroundColor};
   text-align: right;
   padding: 1px 10px;
-  color: #999;
+  color: ${({theme})=> Themes[theme].footerColor};
   font-size: 0.9rem;
   font-weight: 500;
 `;
 
 const Footer = (props: FooterProps) => {
   const { loading, lastUpdate } = props;
+  const { theme } = useContext(SettingsContext);
   return (
-    <FooterContainer>
+    <FooterContainer theme={theme}>
       {!loading && (
         <LastUpdate>
           <IconStyle>
