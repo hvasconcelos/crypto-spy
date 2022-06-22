@@ -1,24 +1,33 @@
-import React from "react";
+import React, {useContext} from "react";
 import styled from "styled-components";
 import { Button } from "@taikai/rocket-kit";
+import { Theme } from "../schema";
+import SettingsContext from "../settings";
+import Themes from "../themes";
 
-const NavBar = styled.div`
+const NavBar = styled.div<ThemeProps>`
   text-align: right;
   width: 100%;
-  background-color: #444;
+  background-color: ${({theme})=> Themes[theme].navBarBackgroundColor};
   display: flex;
   flex-direction: row;
-  border-bottom: 1px solid #444;
+  border-bottom: 1px solid ${({theme})=> Themes[theme].navBarBorderColor};
 `;
+
+
+interface ThemeProps {
+  theme: Theme;
+}
 
 interface FooterProps {
   onChangePage: (page: string) => void;
 }
 
 const NavBarComponent = (props: FooterProps) => {
+  const { theme } = useContext(SettingsContext);
   const { onChangePage } = props;
   return (
-    <NavBar>
+    <NavBar theme={theme}>
       <Button
         ariaLabel="Dummie Button"
         className="button"

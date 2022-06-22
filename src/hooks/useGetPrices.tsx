@@ -1,15 +1,7 @@
-import { coins } from "./config";
+import { coins } from "../config";
 import useFetch from "use-http";
 import useAPIPolling, { APIPollingOptions } from "use-api-polling";
-
-export interface PriceInfo {
-  id: string;
-  symbol: string;
-  number: 0;
-  eur: number;
-  eur_24h_change: number;
-  decimals: number;
-}
+import { PriceInfo } from "../schema";
 
 export const useGetPrices = (
   currencies: string[],
