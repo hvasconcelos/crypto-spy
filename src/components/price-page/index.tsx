@@ -1,6 +1,7 @@
-import { useEffect } from "react";
+import { useEffect, useContext } from "react";
 import { useGetPrices } from "../../hooks/useGetPrices";
 import { BaseCurrency, PriceInfo } from "../../schema";
+import SettingsContext from "../../settings";
 import * as Styles from "./styles";
 
 interface PricePageProps {
@@ -43,6 +44,7 @@ const getChange = (currency: BaseCurrency, info: PriceInfo) => {
 };
 
 const PricePage = (props: PricePageProps) => {
+  const { theme } = useContext(SettingsContext);
   const { currencies, onUpdate, baseCurrency, refreshDelay, onLoading } = props;
 
   const { prices = [], loading = false } = useGetPrices(
@@ -68,7 +70,7 @@ const PricePage = (props: PricePageProps) => {
           const priceChange = getChange(baseCurrency, price);
 
           return (
-            <Styles.CoinItem key={index}>
+            <Styles.CoinItem key={index} theme={theme}>
               <div>
                 <h2>{price.symbol}</h2>
                 <Styles.CoinValue

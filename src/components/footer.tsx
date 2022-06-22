@@ -1,13 +1,13 @@
-import React, {useContext} from "react";
+import React, { useContext } from "react";
 import { Spinner, Icon } from "@taikai/rocket-kit";
 import styled from "styled-components";
 import SettingsContext from "../settings";
 import { Theme } from "../schema";
-import Themes from "../themes";
+// import Themes from "../themes";
 
 interface ThemeProps {
-    theme: Theme;
-  }
+  theme: Theme;
+}
 
 const PricePower = styled.span`
   font-weight: 600;
@@ -38,11 +38,11 @@ interface FooterProps {
 
 const FooterContainer = styled.div<ThemeProps>`
   height: 25px;
-  border-top: 1px solid ${({theme})=> Themes[theme].footerBorderColor};
-  background-color: ${({theme})=> Themes[theme].footerBackgroundColor};
+  border-top: 1px solid red;
+  background-color: green;
   text-align: right;
   padding: 1px 10px;
-  color: ${({theme})=> Themes[theme].footerColor};
+  color: white;
   font-size: 0.9rem;
   font-weight: 500;
 `;

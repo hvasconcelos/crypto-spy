@@ -1,3 +1,5 @@
+import { ThemeSettings } from "../schema";
+
 export const typography = {
   defaultSize: '16px',
   defaultLineHeight: 1.5,
@@ -20,4 +22,13 @@ export const colors = {
   red: '#ef5766',
   background: '#0d0f19',
   backgroundShadow: '#151720'
+};
+
+export const themes: { [index: string]: ThemeSettings } = {
+  dark: {
+    coinItemBackground: colors.backgroundShadow
+  },
+  light: {
+    coinItemBackground:  colors.light
+  }
 };

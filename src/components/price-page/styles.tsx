@@ -1,22 +1,17 @@
 import styled, { css } from "styled-components";
 import { rem } from "polished";
-import { colors, typography } from "../../styles/design-tokens";
+import { themes, typography, colors } from "../../styles/design-tokens";
 
 const { bold } = typography;
-const { light, grey, green, red, background, backgroundShadow } = colors;
+const { light, grey, green, red, backgroundShadow } = colors;
 
 export const CoinGrid = styled.div<{ items: number }>`
-  /* border: 2px solid red; */
   min-height: 100vh;
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: 1fr;
   grid-gap: ${rem("10px")};
   padding: ${rem("10px")};
-
-  > div {
-    /* border: 1px solid red; */
-  }
 
   ${(props) =>
     props.items === 2 &&
@@ -69,20 +64,15 @@ export const CoinGrid = styled.div<{ items: number }>`
 `;
 
 export const CoinItem = styled.div`
-  /* border: 1px solid blue; */
-
   > div {
     width: 100%;
     height: 100%;
-    background-color: ${backgroundShadow};
+    background-color: ${({ theme }) => themes[theme].coinItemBackground};
     text-align: center;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    /* text-align: center; */
-    /* flex: 1; */
-    /* height: 100%; */
 
     h2 {
       margin-bottom: ${rem("10px")};

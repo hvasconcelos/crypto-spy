@@ -1,19 +1,17 @@
-import React, {useContext} from "react";
+import React, { useContext } from "react";
 import styled from "styled-components";
 import { Button } from "@taikai/rocket-kit";
 import { Theme } from "../schema";
 import SettingsContext from "../settings";
-import Themes from "../themes";
 
 const NavBar = styled.div<ThemeProps>`
   text-align: right;
   width: 100%;
-  background-color: ${({theme})=> Themes[theme].navBarBackgroundColor};
+  background-color: red;
   display: flex;
   flex-direction: row;
-  border-bottom: 1px solid ${({theme})=> Themes[theme].navBarBorderColor};
+  border-bottom: 1px solid blue;
 `;
-
 
 interface ThemeProps {
   theme: Theme;

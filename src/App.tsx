@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
+import { ThemeProvider } from "styled-components";
 import Main from "./components/main";
 import SettingsContext, { defaultSettings } from "./settings";
+import { GlobalStyle } from "./styles/global";
 import { Settings } from "./schema";
 import { SettingsFile } from "./utils/settings-helper";
 
@@ -18,16 +20,19 @@ function App() {
   }, []);
 
   return (
-    <SettingsContext.Provider
-      value={{
-        ...settingsVal,
-        updateSettingsFunc: (val) => {
-          setSettingsVal(val);
-        },
-      }}
-    >
-      <Main />
-    </SettingsContext.Provider>
+    <ThemeProvider theme={{ mode: settingsVal.theme ?? "dark" }}>
+      <GlobalStyle />
+      <SettingsContext.Provider
+        value={{
+          ...settingsVal,
+          updateSettingsFunc: (val) => {
+            setSettingsVal(val);
+          },
+        }}
+      >
+        <Main />
+      </SettingsContext.Provider>
+    </ThemeProvider>
   );
 }
 

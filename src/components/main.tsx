@@ -2,7 +2,7 @@ import { useState, useContext } from "react";
 import { coins } from "../config";
 import PricePage from "./price-page";
 import SettingsPage from "./settings-page";
-// import Footer from "./footer";
+import Footer from "./footer";
 import NavBar from "./nav-bar";
 import SettingsContext from "../settings";
 
@@ -16,7 +16,7 @@ const Main = () => {
 
   return (
     <>
-      {/* <NavBar onChangePage={(newPage) => setPage(newPage)} /> */}
+      <NavBar onChangePage={(newPage) => setPage(newPage)} />
       {page === "PRICES" && (
         <PricePage
           currencies={currenciesConfig}
@@ -27,7 +27,7 @@ const Main = () => {
         />
       )}
       {page === "SETTINGS" && <SettingsPage />}
-      {/* <Footer loading={loading} lastUpdate={updatedAt} /> */}
+      <Footer loading={loading} lastUpdate={updatedAt} />
     </>
   );
 };
