@@ -1,10 +1,9 @@
-import React, { useState, useContext } from "react";
-import config from "../config";
-import PricePage from "./prices-page";
+import { useState, useContext } from "react";
+import { coins } from "../config";
+import PricePage from "./price-page";
 import SettingsPage from "./settings-page";
-import Footer from "./footer";
+// import Footer from "./footer";
 import NavBar from "./nav-bar";
-import { BaseLayout } from "../styles/global";
 import SettingsContext from "../settings";
 
 const Main = () => {
@@ -12,11 +11,11 @@ const Main = () => {
   const { refreshInterval, baseCurrency } = useContext(SettingsContext);
   const [updatedAt, setUpdatedAt] = useState<Date>(new Date());
   const [loading, setLoading] = useState(false);
-  const currenciesConfig = config.coins.map((cur) => cur.id);
+  const currenciesConfig = coins.map((cur) => cur.id);
   const { theme } = useContext(SettingsContext);
 
   return (
-    <BaseLayout theme={theme}>
+    <>
       <NavBar onChangePage={(newPage) => setPage(newPage)} />
       {page === "PRICES" && (
         <PricePage
@@ -28,8 +27,8 @@ const Main = () => {
         />
       )}
       {page === "SETTINGS" && <SettingsPage />}
-      <Footer loading={loading} lastUpdate={updatedAt} />
-    </BaseLayout>
+      {/* <Footer loading={loading} lastUpdate={updatedAt} /> */}
+    </>
   );
 };
 

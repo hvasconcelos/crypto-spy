@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useGetPrices } from "../../useGetPrices";
+import { useGetPrices } from "../../hooks/useGetPrices";
 import * as Styles from "./styles";
 
 interface PricePageProps {
