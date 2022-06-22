@@ -1,7 +1,7 @@
 import React, { useEffect, useContext} from "react";
 import styled from "styled-components";
 import { useGetPrices } from "../hooks/useGetPrices";
-import { Theme } from "../schema";
+import { BaseCurrency, PriceInfo, Theme } from "../schema";
 import SettingsContext from "../settings";
 import Themes from "../themes";
 
@@ -67,11 +67,43 @@ const CoinChange = styled.span<CoinChangeProps>`
 
 interface PricePageProps {
   currencies: string[];
-  baseCurrency: string;
+  baseCurrency: BaseCurrency;
   refreshDelay: number;
   onUpdate: ()=> void
   onLoading: (isLoading: boolean)=> void
 }
+
+const currencyToSymbol = (currency: BaseCurrency) => {
+    switch(currency) {
+        case BaseCurrency.EURO: 
+            return "€"
+        case BaseCurrency.USDOLLAR: 
+            return "$"            
+    }
+}
+
+const getPrice = (currency: BaseCurrency, info: PriceInfo) => {
+    switch(currency) {
+        case BaseCurrency.EURO: 
+            return info.eur ?? 0;
+        case BaseCurrency.USDOLLAR: 
+            return info.usd ?? 0;     
+        default:
+            return 0;   
+    }
+}
+
+const getChange= (currency: BaseCurrency, info: PriceInfo) => {
+    switch(currency) {
+        case BaseCurrency.EURO: 
+            return info.eur_24h_change ?? 0;
+        case BaseCurrency.USDOLLAR: 
+            return info.usd_24h_change ?? 0;        
+        default: 
+            return 0;
+    }
+}
+
 
 const PricePage = (props: PricePageProps) => {
   const { theme } = useContext(SettingsContext);
@@ -81,7 +113,6 @@ const PricePage = (props: PricePageProps) => {
     baseCurrency,
     refreshDelay
   );
-
   useEffect(()=>{
     prices && !loading && onUpdate();
   },[prices])
@@ -90,19 +121,27 @@ const PricePage = (props: PricePageProps) => {
     onLoading(loading);
   },[loading])
 
+
   return (
     <CoinGrid>
       {prices &&
-        prices.map((price) => (
-          <CoinItem theme={theme} change={Number.parseInt(price.eur_24h_change.toFixed(2))}>
-            <CoinSymbol theme={theme}>{price.symbol}</CoinSymbol>
-            <CoinPrice theme={theme}>{price.eur.toFixed(price.decimals)} €</CoinPrice>
-            <CoinChange perc={Number.parseInt(price.eur_24h_change.toFixed(2))}>
-              {price.eur_24h_change.toFixed(2)}%
-            </CoinChange>
-            <CoinChangeLabel>24h</CoinChangeLabel>
-          </CoinItem>
-        ))}
+        prices.map((price) => {
+
+            const priceVal = getPrice(baseCurrency, price);
+            const priceChange = getChange(baseCurrency, price);
+            return (
+                <CoinItem theme={theme} change={Number.parseInt(priceVal.toFixed(2))}>
+                <CoinSymbol theme={theme}>{price.symbol}</CoinSymbol>
+                <CoinPrice theme={theme}>{priceVal.toFixed(price.decimals)} {currencyToSymbol(baseCurrency)}</CoinPrice>
+                <CoinChange perc={Number.parseInt(priceChange.toFixed(2))}>
+                  {priceChange.toFixed(2)}%
+                </CoinChange>
+                <CoinChangeLabel>24h</CoinChangeLabel>
+              </CoinItem>
+            );
+        }
+       
+        )}
     </CoinGrid>
   );
 };
