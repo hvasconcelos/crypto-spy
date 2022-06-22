@@ -20,6 +20,8 @@ export interface PriceInfo {
     number: 0;
     eur: number;
     eur_24h_change: number;
+    usd: number;
+    usd_24h_change: number;
     decimals: number;
   }
   

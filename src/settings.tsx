@@ -2,9 +2,17 @@ import { createContext } from "react";
 import {Settings, Theme, BaseCurrency} from "./schema";
 
 export const defaultSettings: Settings = {
-    baseCurrency: BaseCurrency.EURO,
+    baseCurrency: BaseCurrency.USDOLLAR,
     theme: Theme.DARK,
     refreshInterval: 60000
+    
 };
 
-export default createContext(defaultSettings);
+interface SettingsContext extends Settings {
+    updateSettingsFunc: (settings: Settings)=> void
+};
+
+export default createContext<SettingsContext>({
+    ...defaultSettings,
+    updateSettingsFunc: ()=> {}
+});

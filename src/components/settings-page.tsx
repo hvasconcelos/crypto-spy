@@ -1,12 +1,16 @@
-import React from "react";
+import React, { useContext, useState } from "react";
 import styled from "styled-components";
+import SettingsContext from "../settings";
 import {
-    Select,
+  Select,
   GridContainer,
   GridCol,
   GridRow,
   TextField,
+  Button,
 } from "@taikai/rocket-kit";
+import { BaseCurrency, Settings, Theme } from "../schema";
+import { SettingsFile } from "../utils/settings-helper";
 
 
 const SectionContainer = styled.div`
@@ -30,29 +34,29 @@ const SectionContainer = styled.div`
     font-weight: 700;
     width: 230px;
     text-align: left;
-    font-size: 1.0rem;
+    font-size: 1rem;
   }
   div.value-column {
     font-weight: 500;
-  } 
+  }
   select {
     color: #666;
     font-weight: 600;
     border-color: #666;
   }
   input {
-      background: #444;
-      border: 1px solid #666;
-      color: #888;
-      border-radius: 3px;
-      font-weight: 600;
+    background: #444;
+    border: 1px solid #666;
+    color: #888;
+    border-radius: 3px;
+    font-weight: 600;
   }
 `;
 
 const Section = styled.div`
   padding: 20px;
   width: 100%;
-  padding-top: 20px;  
+  padding-top: 20px;
 `;
 
 const SectionTitle = styled.div`
@@ -68,73 +72,137 @@ const SectionTitle = styled.div`
 
 const SectionBody = styled.div``;
 
+const SectionFooter = styled.div`
+  margin-top: 20px;
+  border-top: 1px solid #666;
+  padding-top: 20px;
+  button.pref-button {
+      background-color: #444;
+      border: 1px solid #666;
+      border-radius: 4px;
+      color: #333;
+  }
+`;
+
 const SettingsComponent = () => {
+  const curSettings = useContext(SettingsContext);
+  const [settings, setSettings] = useState<Settings>(curSettings);
+  const settingsFile = new SettingsFile<Settings>("settings.json");
   return (
     <SectionContainer>
       <Section>
         <SectionTitle>Settings</SectionTitle>
         <SectionBody>
           <GridContainer className="grid-cont">
-            <GridRow className="grid-row" >
+            <GridRow className="grid-row">
               <GridCol className="label-column">Currency:</GridCol>
               <GridCol className="value-column">
                 <Select
                   name="Base Currency"
+                  value={settings.baseCurrency}
                   minimal={true}
-                  onChange={() => {}}
+                  onChange={(value) => { 
+                      setSettings({
+                          ...settings,
+                          baseCurrency: value.target.value as BaseCurrency
+                      })
+                  }}
                   options={[
                     {
-                        name: "EURO",
-                      value: "EURO",
+                      name: "EURO",
+                      value: "eur",
                     },
                     {
-                        name: "USD",
-                      value: "USDOLLAR",
+                      name: "USD",
+                      value: "usd",
                     },
                   ]}
-    
+                  
                 />
               </GridCol>
             </GridRow>
-            <GridRow className="grid-row" >
+            <GridRow className="grid-row">
               <GridCol className="label-column">Theme:</GridCol>
               <GridCol className="value-column">
                 <Select
-                  name="Base Currency"
+                  name="Theme"
                   minimal={true}
-                  onChange={() => {}}
+                  value={settings.theme}
+                  onChange={(value) => { 
+                    setSettings({
+                        ...settings,
+                        theme: (value.target.value as Theme)
+                    })
+                }}
                   options={[
                     {
-                        name: "LIGHT",
-                      value: "LIGHT",
+                      name: "LIGHT",
+                      value: "light",
                     },
                     {
-                        name: "DARK",
-                      value: "DARK",
+                      name: "DARK",
+                      value: "dark",
                     },
                   ]}
-    
                 />
               </GridCol>
             </GridRow>
-            <GridRow className="grid-row" >
-              <GridCol className="label-column">Refresh Interval (sec):</GridCol>
+            <GridRow className="grid-row">
+              <GridCol className="label-column">
+                Refresh Interval (sec):
+              </GridCol>
               <GridCol className="value-column">
-              <TextField
-                max={30000}
-                min={120000}
-                minimal={true}
-                error={""}
-                name="awesome-number"
-                placeholder="Refresh Interval"
-                type="number"
-                value={60000}
-                defaultValue={60000}
+              <Select
+                  name="Theme"
+                  minimal={true}
+                  value={settings.theme}
+                  onChange={(value) => { 
+                    setSettings({
+                        ...settings,
+                        refreshInterval: parseInt(value.target.value)
+                    })
+                }}
+                  options={[
+                    {
+                      name: "30s",
+                      value: 30000,
+                    },
+                    {
+                        name: "60s",
+                        value: 60000,
+                      },
+                      {
+                        name: "90s",
+                        value: 90000,
+                      },
+                      {
+                        name: "120s",
+                        value: 120000,
+                      },
+                  ]}
                 />
               </GridCol>
             </GridRow>
           </GridContainer>
         </SectionBody>
+        <SectionFooter>
+        <Button
+            ariaLabel="Dummie Button"
+            className="pref-button"
+            color="green"
+
+            action={()=> {                               
+                settingsFile.save(settings).then(()=> {
+                    console.log("saved settings");
+                });       
+                curSettings.updateSettingsFunc(settings);         
+            }}
+            iconPosition="left"
+            querySelector=".button"
+            value="Save"
+            variant="solid"
+            />
+        </SectionFooter>
       </Section>
     </SectionContainer>
   );
