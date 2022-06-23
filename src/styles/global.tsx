@@ -1,16 +1,39 @@
-import styled from 'styled-components';
-import Themes from "../themes";
-import { Theme } from "../schema";
+import { createGlobalStyle } from "styled-components";
+import { rem } from "polished";
+import { colors, typography } from "./design-tokens";
 
-interface ThemeProps {
-  theme: Theme;
+const { regular, black, defaultSize, defaultLineHeight } = typography;
+const { normal, background } = colors;
+
+interface GlobalStylesProps {
+  whiteColor?: boolean;
 }
 
-export const BaseLayout = styled.div<ThemeProps>`
-  display: flex;
-  flex-direction: column;
-  background-color: ${({theme})=> Themes[theme].backgroundColor};
-  justify-content: space-between;
-  height: 100%;
-`;
+export const GlobalStyle = createGlobalStyle<GlobalStylesProps>`
+  html {
+    box-sizing: border-box;
+    font-size: ${defaultSize};
+    scroll-behavior: smooth;
+  }
 
+  *, *::before, *::after {
+    box-sizing: inherit;
+  }
+
+  body {
+    margin: 0;
+    font-family: 'Noto Sans Mono', Verdana, Arial, Helvetica, monospace;
+    font-size: ${rem("16px")};
+    font-weight: ${regular};
+    color: ${normal};
+    line-height: ${defaultLineHeight};
+    -webkit-font-smoothing: antialiased;
+    background-color: ${background};
+  }
+
+  h2 {
+    margin: 0;
+    font-size: ${rem("20px")};
+    font-weight: ${black};
+  }
+`;
