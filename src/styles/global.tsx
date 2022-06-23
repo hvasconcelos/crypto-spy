@@ -1,6 +1,6 @@
 import { createGlobalStyle } from "styled-components";
 import { rem } from "polished";
-import { colors, typography } from "./design-tokens";
+import { colors, typography, themes } from "./design-tokens";
 
 const { regular, black, defaultSize, defaultLineHeight } = typography;
 const { normal, background } = colors;
@@ -29,8 +29,6 @@ export const GlobalStyle = createGlobalStyle<GlobalStylesProps>`
     line-height: ${defaultLineHeight};
     -webkit-font-smoothing: antialiased;
     background-color: ${background};
-    /* background-color: ${(props) =>
-      props.whiteColor ? "green" : "black"}; */
   }
 
   h2 {

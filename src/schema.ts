@@ -26,5 +26,10 @@ export interface PriceInfo {
 }
 
 export interface ThemeSettings {
+  globalBackground: string;
   coinItemBackground: string;
+  coinItemSymbol: string;
+  coinItemPriceColor: string;
+  footerFontColor: string;
+  footerLinkHoverColor: string;
 }
