@@ -63,7 +63,7 @@ const PricePage = (props: PricePageProps) => {
   }
 
   return (
-    <Styles.CoinGrid items={prices.length}>
+    <Styles.CoinGrid items={prices.length} theme={theme}>
       {prices &&
         prices.map((price, index) => {
           const priceVal = getPrice(baseCurrency, price);
@@ -74,6 +74,7 @@ const PricePage = (props: PricePageProps) => {
               <div>
                 <h2>{price.symbol}</h2>
                 <Styles.CoinValue
+                  theme={theme}
                   perc={Number.parseInt(priceChange.toFixed(2))}
                 >
                   <span className="price">

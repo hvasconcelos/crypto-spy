@@ -1,17 +1,19 @@
 import styled, { css } from "styled-components";
 import { rem } from "polished";
-import { themes, typography, colors } from "../../styles/design-tokens";
+import { themes, typography, colors, misc } from "../../styles/design-tokens";
 
 const { bold } = typography;
-const { light, grey, green, red, backgroundShadow } = colors;
+const { green, red } = colors;
+const { pricingGridGap, footerHeight } = misc;
 
 export const CoinGrid = styled.div<{ items: number }>`
-  min-height: 100vh;
+  background-color: ${({ theme }) => themes[theme].globalBackground};
+  min-height: calc(100vh - ${footerHeight});
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: 1fr;
-  grid-gap: ${rem("10px")};
-  padding: ${rem("10px")};
+  grid-gap: ${pricingGridGap};
+  padding: ${pricingGridGap} ${pricingGridGap} 0 ${pricingGridGap};
 
   ${(props) =>
     props.items === 2 &&
@@ -76,7 +78,7 @@ export const CoinItem = styled.div`
 
     h2 {
       margin-bottom: ${rem("10px")};
-      color: ${grey};
+      color: ${({ theme }) => themes[theme].coinItemSymbol};
       line-height: 1;
     }
   }
@@ -90,7 +92,7 @@ export const CoinValue = styled.div<{ perc: number }>`
     &.price {
       margin-bottom: ${rem("5px")};
       font-weight: ${bold};
-      color: ${light};
+      color: ${({ theme }) => themes[theme].coinItemPriceColor};
     }
 
     &.percentage {
