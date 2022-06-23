@@ -1,6 +1,6 @@
 import { createGlobalStyle } from "styled-components";
 import { rem } from "polished";
-import { colors, typography, themes } from "./design-tokens";
+import { colors, typography } from "./design-tokens";
 
 const { regular, black, defaultSize, defaultLineHeight } = typography;
 const { normal, background } = colors;
