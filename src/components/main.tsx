@@ -3,7 +3,6 @@ import { coins } from "../config";
 import PricePage from "./price-page";
 import SettingsPage from "./settings-page";
 import Footer from "./footer";
-import NavBar from "./nav-bar";
 import SettingsContext from "../settings";
 
 const Main = () => {
@@ -12,22 +11,28 @@ const Main = () => {
   const [updatedAt, setUpdatedAt] = useState<Date>(new Date());
   const [loading, setLoading] = useState(false);
   const currenciesConfig = coins.map((cur) => cur.id);
-  // const { theme } = useContext(SettingsContext);
 
   return (
     <>
-      <NavBar onChangePage={(newPage) => setPage(newPage)} />
       {page === "PRICES" && (
-        <PricePage
-          currencies={currenciesConfig}
-          baseCurrency={baseCurrency}
-          refreshDelay={refreshInterval}
-          onUpdate={() => setUpdatedAt(new Date())}
-          onLoading={(isLoading) => setLoading(isLoading)}
-        />
+        <>
+          <PricePage
+            currencies={currenciesConfig}
+            baseCurrency={baseCurrency}
+            refreshDelay={refreshInterval}
+            onUpdate={() => setUpdatedAt(new Date())}
+            onLoading={(isLoading) => setLoading(isLoading)}
+          />
+          <Footer
+            loading={loading}
+            lastUpdate={updatedAt}
+            onChangePage={(newPage) => setPage(newPage)}
+          />
+        </>
       )}
-      {page === "SETTINGS" && <SettingsPage />}
-      <Footer loading={loading} lastUpdate={updatedAt} />
+      {page === "SETTINGS" && (
+        <SettingsPage onChangePage={(newPage) => setPage(newPage)} />
+      )}
     </>
   );
 };
