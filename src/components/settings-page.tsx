@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import { useContext, useState } from "react";
 import styled from "styled-components";
 import SettingsContext from "../settings";
 import {
@@ -11,7 +11,6 @@ import {
 } from "@taikai/rocket-kit";
 import { BaseCurrency, Settings, Theme } from "../schema";
 import { SettingsFile } from "../utils/settings-helper";
-
 
 const SectionContainer = styled.div`
   display: flex;
@@ -77,14 +76,19 @@ const SectionFooter = styled.div`
   border-top: 1px solid #666;
   padding-top: 20px;
   button.pref-button {
-      background-color: #444;
-      border: 1px solid #666;
-      border-radius: 4px;
-      color: #333;
+    background-color: #444;
+    border: 1px solid #666;
+    border-radius: 4px;
+    color: #333;
   }
 `;
 
-const SettingsComponent = () => {
+interface SettingsComponentsProps {
+  onChangePage: (page: string) => void;
+}
+
+const SettingsComponent = (props: SettingsComponentsProps) => {
+  const { onChangePage } = props;
   const curSettings = useContext(SettingsContext);
   const [settings, setSettings] = useState<Settings>(curSettings);
   const settingsFile = new SettingsFile<Settings>("settings.json");
@@ -101,11 +105,11 @@ const SettingsComponent = () => {
                   name="Base Currency"
                   value={settings.baseCurrency}
                   minimal={true}
-                  onChange={(value) => { 
-                      setSettings({
-                          ...settings,
-                          baseCurrency: value.target.value as BaseCurrency
-                      })
+                  onChange={(value) => {
+                    setSettings({
+                      ...settings,
+                      baseCurrency: value.target.value as BaseCurrency,
+                    });
                   }}
                   options={[
                     {
@@ -117,7 +121,6 @@ const SettingsComponent = () => {
                       value: "usd",
                     },
                   ]}
-                  
                 />
               </GridCol>
             </GridRow>
@@ -128,12 +131,12 @@ const SettingsComponent = () => {
                   name="Theme"
                   minimal={true}
                   value={settings.theme}
-                  onChange={(value) => { 
+                  onChange={(value) => {
                     setSettings({
-                        ...settings,
-                        theme: (value.target.value as Theme)
-                    })
-                }}
+                      ...settings,
+                      theme: value.target.value as Theme,
+                    });
+                  }}
                   options={[
                     {
                       name: "LIGHT",
@@ -152,33 +155,33 @@ const SettingsComponent = () => {
                 Refresh Interval (sec):
               </GridCol>
               <GridCol className="value-column">
-              <Select
+                <Select
                   name="Theme"
                   minimal={true}
                   value={settings.theme}
-                  onChange={(value) => { 
+                  onChange={(value) => {
                     setSettings({
-                        ...settings,
-                        refreshInterval: parseInt(value.target.value)
-                    })
-                }}
+                      ...settings,
+                      refreshInterval: parseInt(value.target.value),
+                    });
+                  }}
                   options={[
                     {
                       name: "30s",
                       value: 30000,
                     },
                     {
-                        name: "60s",
-                        value: 60000,
-                      },
-                      {
-                        name: "90s",
-                        value: 90000,
-                      },
-                      {
-                        name: "120s",
-                        value: 120000,
-                      },
+                      name: "60s",
+                      value: 60000,
+                    },
+                    {
+                      name: "90s",
+                      value: 90000,
+                    },
+                    {
+                      name: "120s",
+                      value: 120000,
+                    },
                   ]}
                 />
               </GridCol>
@@ -186,22 +189,34 @@ const SettingsComponent = () => {
           </GridContainer>
         </SectionBody>
         <SectionFooter>
-        <Button
+          <Button
             ariaLabel="Dummie Button"
             className="pref-button"
             color="green"
-
-            action={()=> {                               
-                settingsFile.save(settings).then(()=> {
-                    console.log("saved settings");
-                });       
-                curSettings.updateSettingsFunc(settings);         
+            action={() => {
+              settingsFile.save(settings).then(() => {
+                console.log("saved settings");
+              });
+              curSettings.updateSettingsFunc(settings);
+              onChangePage("PRICES");
             }}
             iconPosition="left"
             querySelector=".button"
             value="Save"
             variant="solid"
-            />
+          />
+          <Button
+            ariaLabel="Dummie Button"
+            className="pref-button"
+            color="green"
+            action={() => {
+              onChangePage("PRICES");
+            }}
+            iconPosition="left"
+            querySelector=".button"
+            value="Cancel"
+            variant="solid"
+          />
         </SectionFooter>
       </Section>
     </SectionContainer>
