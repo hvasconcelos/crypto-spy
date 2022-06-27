@@ -37,11 +37,9 @@ const SectionContainer = styled.div`
 
   div.label-column {
     color: #BBB;
-  
     width: 230px;
     text-align: left;
-    font-size: 0.9rem;
-    font-weight: 500;
+    font-size: 0.9rem;    
   }
   div.value-column {
     font-weight: 300;
@@ -78,6 +76,7 @@ const SectionTitle = styled.div`
   padding-bottom: 10px;
   border-bottom: 1px solid ${({ theme }) => themes.grey.globalSepColor};
   margin-bottom: 10px;
+  padding-left: 10px;
 `;
 
 const SectionBody = styled.div``;
