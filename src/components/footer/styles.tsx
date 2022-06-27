@@ -6,7 +6,7 @@ const { linkTransitionDuration, pricingGridGap, footerHeight } = misc;
 const { light } = colors;
 
 export const Wrapper = styled.div`
-  background-color: ${({ theme }) => themes[theme].globalBackground};
+  background-color: ${({ theme }) => themes[theme].footerBackground};
   height: ${footerHeight};
   display: flex;
   justify-content: space-between;

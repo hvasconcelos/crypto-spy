@@ -29,7 +29,8 @@ export const GlobalStyle = createGlobalStyle<GlobalStylesProps>`
     color: ${normal};
     line-height: ${defaultLineHeight};
     -webkit-font-smoothing: antialiased;
-    background-color: ${background};
+    height: 100%;
+    background-color: ${({ theme }) => themes[theme].globalBackground};
   }
 
   h2 {

@@ -7,7 +7,7 @@ export enum Theme {
   LIGHT = "light",
   DARK = "dark",
   TAIKAI = "taikai",
-  RETRO = "retro"
+  GREY = "grey"
 }
 
 export interface Settings {
@@ -29,6 +29,7 @@ export interface PriceInfo {
 
 export interface ThemeSettings {
   globalBackground: string;
+  globalSepColor: string;
   coinItemBackground: string;
   coinItemSymbol: string;
   coinItemPriceColor: string;
@@ -44,4 +45,6 @@ export interface ThemeSettings {
   priceFontWeight: string;
   priceChangeFontSize: string;
   priceChangeFontWeight: string;
+  footerBackground: string;
+  
 }

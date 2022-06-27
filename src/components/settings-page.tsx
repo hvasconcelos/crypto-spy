@@ -11,13 +11,20 @@ import {
 } from "@taikai/rocket-kit";
 import { BaseCurrency, Settings, Theme } from "../schema";
 import { SettingsFile } from "../utils/settings-helper";
+import { themes , colors } from "../styles/design-tokens";
+
+
+
 
 const SectionContainer = styled.div`
   display: flex;
+  background-color: ${({ theme }) => themes.grey.globalBackground};
   flex-direction: column;
   height: 100%;
   align-items: flex-start;
+  font-size: 1.0rem;
   width: 100%;
+  color: #888;
   div.grid-cont {
     width: 100%;
   }
@@ -29,26 +36,29 @@ const SectionContainer = styled.div`
   }
 
   div.label-column {
-    color: #999;
-    font-weight: 700;
+    color: #BBB;
+  
     width: 230px;
     text-align: left;
-    font-size: 1rem;
-  }
-  div.value-column {
+    font-size: 0.9rem;
     font-weight: 500;
   }
+  div.value-column {
+    font-weight: 300;
+  }
   select {
-    color: #666;
-    font-weight: 600;
-    border-color: #666;
+    color: #BBB;
+    font-weight: 300;
+    border-color: ${({ theme }) => themes.grey.globalSepColor};
   }
   input {
-    background: #444;
-    border: 1px solid #666;
-    color: #888;
+    background: ${({ theme }) => themes.grey.globalBackground};
+    border: 1px solid ${({ theme }) => themes.grey.globalSepColor};
+    color: ${({ theme }) => themes.grey.globalSepColor};
     border-radius: 3px;
-    font-weight: 600;
+  }
+  .pref-button {
+    display: inline;
   }
 `;
 
@@ -61,11 +71,12 @@ const Section = styled.div`
 const SectionTitle = styled.div`
   width: 100%;
   font-size: 1rem;
-  color: #999;
-  font-weight: 700;
+  text-transform: uppercase;
+  color: #FFF;
+  font-weight: 600;
   text-align: left;
   padding-bottom: 10px;
-  border-bottom: 1px solid #555;
+  border-bottom: 1px solid ${({ theme }) => themes.grey.globalSepColor};
   margin-bottom: 10px;
 `;
 
@@ -73,13 +84,13 @@ const SectionBody = styled.div``;
 
 const SectionFooter = styled.div`
   margin-top: 20px;
-  border-top: 1px solid #666;
+  border-top: 1px solid ${({ theme }) => themes.grey.globalSepColor};
   padding-top: 20px;
   button.pref-button {
-    background-color: #444;
+    background-color: #555;
     border: 1px solid #666;
     border-radius: 4px;
-    color: #333;
+    margin-right: 10px;
   }
 `;
 
@@ -88,14 +99,15 @@ interface SettingsComponentsProps {
 }
 
 const SettingsComponent = (props: SettingsComponentsProps) => {
-  const { onChangePage } = props;
+  const { onChangePage} = props;
   const curSettings = useContext(SettingsContext);
+  const {theme } = curSettings;
   const [settings, setSettings] = useState<Settings>(curSettings);
   const settingsFile = new SettingsFile<Settings>("settings.json");
   return (
-    <SectionContainer>
+    <SectionContainer theme={theme}>
       <Section>
-        <SectionTitle>Settings</SectionTitle>
+        <SectionTitle theme={theme}>Settings</SectionTitle>
         <SectionBody>
           <GridContainer className="grid-cont">
             <GridRow className="grid-row">
@@ -151,8 +163,8 @@ const SettingsComponent = (props: SettingsComponentsProps) => {
                       value: "taikai",
                     },
                     {
-                      name: "RETRO",
-                      value: "retro",
+                      name: "GREY",
+                      value: "grey",
                     },
                   ]}
                 />
@@ -196,7 +208,7 @@ const SettingsComponent = (props: SettingsComponentsProps) => {
             </GridRow>
           </GridContainer>
         </SectionBody>
-        <SectionFooter>
+        <SectionFooter theme={theme}>
           <Button
             ariaLabel="Dummie Button"
             className="pref-button"

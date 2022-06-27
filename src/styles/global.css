@@ -1,5 +1,12 @@
 @font-face {
+  font-family: 'Space Grotesk';
+  src: url('../../public/fonts/Space_Grotesk/SpaceGrotesk-VariableFont_wght.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
   font-family: 'Noto Sans Mono';
   src: url('../../public/fonts/Noto_Sans_Mono/NotoSansMono-VariableFont_wdth,wght.ttf') format('truetype');
   font-display: swap;
 }
+
