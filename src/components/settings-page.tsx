@@ -146,6 +146,14 @@ const SettingsComponent = (props: SettingsComponentsProps) => {
                       name: "DARK",
                       value: "dark",
                     },
+                    {
+                      name: "TAIKAI",
+                      value: "taikai",
+                    },
+                    {
+                      name: "RETRO",
+                      value: "retro",
+                    },
                   ]}
                 />
               </GridCol>
@@ -195,7 +203,6 @@ const SettingsComponent = (props: SettingsComponentsProps) => {
             color="green"
             action={() => {
               settingsFile.save(settings).then(() => {
-                console.log("saved settings");
               });
               curSettings.updateSettingsFunc(settings);
               onChangePage("PRICES");

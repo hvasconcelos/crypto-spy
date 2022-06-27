@@ -7,7 +7,7 @@ import { SettingsFile } from "./utils/settings-helper";
 
 function App() {
   const [settingsVal, setSettingsVal] = useState(defaultSettings);
-
+  const {theme } = settingsVal;
   async function fetchSettings() {
     const settingsFile = new SettingsFile<Settings>("settings.json");
     const loadedSettings = await settingsFile.load(defaultSettings);
@@ -18,13 +18,14 @@ function App() {
     fetchSettings();
   }, []);
 
+
   return (
     <>
-      <GlobalStyle />
+      <GlobalStyle theme={theme} />
       <SettingsContext.Provider
         value={{
           ...settingsVal,
-          updateSettingsFunc: (val) => {
+          updateSettingsFunc: (val) => {            
             setSettingsVal(val);
           },
         }}

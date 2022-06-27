@@ -20,7 +20,6 @@ export const useGetPrices = (
 
   const fetchFunc = async () => {
     const data = await get(url);
-
     return Object.keys(data).map((key) => {
       const [coin] = coins.filter((coinItem) => coinItem.id === key);
       return {
@@ -34,6 +33,7 @@ export const useGetPrices = (
     fetchFunc,
     initialState: [],
     delay: refreshInterval,
+    updateTrigger: convertTo
   };
 
   const prices = useAPIPolling(options);

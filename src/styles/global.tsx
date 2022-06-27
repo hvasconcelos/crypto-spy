@@ -1,12 +1,13 @@
 import { createGlobalStyle } from "styled-components";
 import { rem } from "polished";
-import { colors, typography } from "./design-tokens";
+import { colors, typography, themes} from "./design-tokens";
 
 const { regular, black, defaultSize, defaultLineHeight } = typography;
 const { normal, background } = colors;
 
 interface GlobalStylesProps {
   whiteColor?: boolean;
+  theme: string;
 }
 
 export const GlobalStyle = createGlobalStyle<GlobalStylesProps>`
@@ -22,7 +23,7 @@ export const GlobalStyle = createGlobalStyle<GlobalStylesProps>`
 
   body {
     margin: 0;
-    font-family: 'Noto Sans Mono', Verdana, Arial, Helvetica, monospace;
+    font-family: ${({ theme }) => themes[theme].font};
     font-size: ${rem("16px")};
     font-weight: ${regular};
     color: ${normal};

@@ -6,6 +6,8 @@ export enum BaseCurrency {
 export enum Theme {
   LIGHT = "light",
   DARK = "dark",
+  TAIKAI = "taikai",
+  RETRO = "retro"
 }
 
 export interface Settings {
@@ -32,4 +34,14 @@ export interface ThemeSettings {
   coinItemPriceColor: string;
   footerFontColor: string;
   footerLinkHoverColor: string;
+  red: string;
+  green: string;
+  pricingGridGap: string;
+  font: string;
+  symbolFontSize: string;
+  symbolFontWeight:string;
+  priceFontSize: string;
+  priceFontWeight: string;
+  priceChangeFontSize: string;
+  priceChangeFontWeight: string;
 }

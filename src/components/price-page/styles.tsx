@@ -12,8 +12,8 @@ export const CoinGrid = styled.div<{ items: number }>`
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: 1fr;
-  grid-gap: ${pricingGridGap};
-  padding: ${pricingGridGap} ${pricingGridGap} 0 ${pricingGridGap};
+  grid-gap: ${({ theme }) => themes[theme].pricingGridGap};
+  padding: ${({ theme }) => themes[theme].pricingGridGap} ${({ theme }) => themes[theme].pricingGridGap} 0 ${({ theme }) => themes[theme].pricingGridGap};
 
   ${(props) =>
     props.items === 2 &&
@@ -80,24 +80,29 @@ export const CoinItem = styled.div`
       margin-bottom: ${rem("10px")};
       color: ${({ theme }) => themes[theme].coinItemSymbol};
       line-height: 1;
+      font-size: ${({ theme }) => themes[theme].symbolFontSize};
+      font-weight: ${({ theme }) => themes[theme].symbolFontWeight};
     }
   }
 `;
 
 export const CoinValue = styled.div<{ perc: number }>`
+    
   span {
     display: block;
     line-height: 1;
-
     &.price {
       margin-bottom: ${rem("5px")};
-      font-weight: ${bold};
+      font-size: ${({ theme }) => themes[theme].priceFontSize};
+      font-weight: ${({ theme }) => themes[theme].priceFontWeight};
       color: ${({ theme }) => themes[theme].coinItemPriceColor};
     }
 
     &.percentage {
-      font-size: ${rem("12px")};
-      color: ${(props) => (props.perc && props.perc > 0 ? green : red)};
+      margin-top: 10px;      
+      font-size: ${({ theme }) => themes[theme].priceChangeFontSize};
+      font-weight: ${({ theme }) => themes[theme].priceChangeFontWeight};
+      color: ${(props) => (props.perc && props.perc > 0 ?  themes[props.theme].green : themes[props.theme].red)};
     }
   }
 `;
