@@ -1,4 +1,4 @@
-import useFetch from "use-http";
+import useFetch, { CachePolicies } from "use-http";
 import useAPIPolling, { APIPollingOptions } from "use-api-polling";
 import { BaseCurrency, PriceInfo } from "../schema";
 import { coins } from "../config";
@@ -11,8 +11,10 @@ export const useGetPrices = (
   const {
     get,
     loading = false,
-    error  = false,
-  } = useFetch(`https://api.coingecko.com`, {}, []);
+    error  = false,    
+  } = useFetch(`https://api.coingecko.com`, {
+    cachePolicy: CachePolicies.NETWORK_ONLY
+  });
 
   const currenciesReq = currencies.join(",");
   const vscurrenciesReq = currencies.map(() => convertTo).join(",");
