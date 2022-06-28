@@ -15,10 +15,15 @@ export const GlobalStyle = createGlobalStyle<GlobalStylesProps>`
     box-sizing: border-box;
     font-size: ${defaultSize};
     scroll-behavior: smooth;
+    height: 100%;
   }
 
   *, *::before, *::after {
     box-sizing: inherit;
+
+  }
+  #root {
+    height: 100%;
   }
 
   body {
@@ -30,6 +35,8 @@ export const GlobalStyle = createGlobalStyle<GlobalStylesProps>`
     line-height: ${defaultLineHeight};
     -webkit-font-smoothing: antialiased;
     height: 100%;
+    display: flex;
+    flex-direction: column;
     background-color: ${({ theme }) => themes.grey.globalBackground};
   }
 

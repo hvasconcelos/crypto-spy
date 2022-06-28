@@ -1,99 +1,16 @@
 import { useContext, useState } from "react";
-import styled from "styled-components";
-import SettingsContext from "../settings";
+
+import SettingsContext from "../../settings";
 import {
   Select,
   GridContainer,
   GridCol,
   GridRow,
-  TextField,
   Button,
 } from "@taikai/rocket-kit";
-import { BaseCurrency, Settings, Theme } from "../schema";
-import { SettingsFile } from "../utils/settings-helper";
-import { themes , colors } from "../styles/design-tokens";
-
-
-
-
-const SectionContainer = styled.div`
-  display: flex;
-  background-color: ${({ theme }) => themes.grey.globalBackground};
-  flex-direction: column;
-  height: 100%;
-  align-items: flex-start;
-  font-size: 1.0rem;
-  width: 100%;
-  color: #888;
-  div.grid-cont {
-    width: 100%;
-  }
-  div.grid-row {
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    margin: 10px 10px 10px 20px;
-  }
-
-  div.label-column {
-    color: #EEE;
-    width: 230px;
-    text-align: left;
-    font-size: 0.9rem;   
-
-
-  }
-  div.value-column {
-    font-weight: 300;
-  }
-  select {
-    color: #BBB;
-    font-weight: 300;
-    border-color: ${({ theme }) => themes.grey.globalSepColor};
-  }
-  input {
-    background: ${({ theme }) => themes.grey.globalBackground};
-    border: 1px solid ${({ theme }) => themes.grey.globalSepColor};
-    color: ${({ theme }) => themes.grey.globalSepColor};
-    border-radius: 3px;
-  }
-  .pref-button {
-    display: inline;
-  }
-`;
-
-const Section = styled.div`
-  padding: 20px;
-  width: 100%;
-  padding-top: 20px;
-`;
-
-const SectionTitle = styled.div`
-  width: 100%;
-  font-size: 1rem;
-  text-transform: uppercase;
-  color: #999;
-  font-weight: 600;
-  text-align: left;
-  padding-bottom: 10px;
-  border-bottom: 1px solid ${({ theme }) => themes.grey.globalSepColor};
-  margin-bottom: 10px;
-
-`;
-
-const SectionBody = styled.div``;
-
-const SectionFooter = styled.div`
-  margin-top: 20px;
-  border-top: 1px solid ${({ theme }) => themes.grey.globalSepColor};
-  padding-top: 20px;
-  button.pref-button {
-    background-color: #555;
-    border: 1px solid #666;
-    border-radius: 4px;
-    margin-right: 10px;
-  }
-`;
+import { BaseCurrency, Settings, Theme } from "../../schema";
+import { SettingsFile } from "../../utils/settings-helper";
+import * as Styles from "./styles";
 
 interface SettingsComponentsProps {
   onChangePage: (page: string) => void;
@@ -106,10 +23,10 @@ const SettingsComponent = (props: SettingsComponentsProps) => {
   const [settings, setSettings] = useState<Settings>(curSettings);
   const settingsFile = new SettingsFile<Settings>("settings.json");
   return (
-    <SectionContainer theme={theme}>
-      <Section>
-        <SectionTitle theme={theme}>Settings</SectionTitle>
-        <SectionBody>
+    <Styles.SectionContainer theme={theme}>
+      <Styles.Section>
+        <Styles.SectionTitle theme={theme}>Settings</Styles.SectionTitle>
+        <Styles.SectionBody>
           <GridContainer className="grid-cont">
             <GridRow className="grid-row">
               <GridCol className="label-column">Currency:</GridCol>
@@ -179,7 +96,7 @@ const SettingsComponent = (props: SettingsComponentsProps) => {
                 <Select
                   name="Theme"
                   minimal={true}
-                  value={settings.theme}
+                  value={settings.refreshInterval}
                   onChange={(value) => {
                     setSettings({
                       ...settings,
@@ -208,8 +125,10 @@ const SettingsComponent = (props: SettingsComponentsProps) => {
               </GridCol>
             </GridRow>
           </GridContainer>
-        </SectionBody>
-        <SectionFooter theme={theme}>
+        </Styles.SectionBody>
+
+      </Styles.Section>
+      <Styles.SectionFooter theme={theme}>
           <Button
             ariaLabel="Dummie Button"
             className="pref-button"
@@ -237,9 +156,8 @@ const SettingsComponent = (props: SettingsComponentsProps) => {
             value="Cancel"
             variant="solid"
           />
-        </SectionFooter>
-      </Section>
-    </SectionContainer>
+        </Styles.SectionFooter>
+    </Styles.SectionContainer>
   );
 };
 

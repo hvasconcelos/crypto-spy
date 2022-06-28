@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import SettingsContext, { defaultSettings } from "./settings";
-import Main from "./components/main";
+import Main from "./components/main-layout";
 import { GlobalStyle } from "./styles/global";
 import { Settings } from "./schema";
 import { SettingsFile } from "./utils/settings-helper";

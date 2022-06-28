@@ -1,9 +1,10 @@
 import { useState, useContext } from "react";
-import { coins } from "../config";
-import PricePage from "./price-page";
-import SettingsPage from "./settings-page";
-import Footer from "./footer";
-import SettingsContext from "../settings";
+import { coins } from "../../config";
+import PricePage from "../price-page";
+import SettingsPage from "../settings-page";
+import Footer from "../footer";
+import SettingsContext from "../../settings";
+import * as Styles from "./styles";
 
 const Main = () => {
   const [page, setPage] = useState("PRICES");
@@ -13,7 +14,7 @@ const Main = () => {
   const currenciesConfig = coins.map((cur) => cur.id);
 
   return (
-    <>
+    <Styles.MainContainer>
       {page === "PRICES" && (
         <>
           <PricePage
@@ -33,7 +34,7 @@ const Main = () => {
       {page === "SETTINGS" && (
         <SettingsPage onChangePage={(newPage) => setPage(newPage)} />
       )}
-    </>
+    </Styles.MainContainer>
   );
 };
 
