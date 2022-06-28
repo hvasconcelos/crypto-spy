@@ -3,6 +3,7 @@ import { useGetPrices } from "../../hooks/useGetPrices";
 import { BaseCurrency, PriceInfo } from "../../schema";
 import SettingsContext from "../../settings";
 import * as Styles from "./styles";
+import { Spinner, Icon } from "@taikai/rocket-kit";
 
 interface PricePageProps {
   currencies: string[];
@@ -47,11 +48,11 @@ const PricePage = (props: PricePageProps) => {
   const { theme } = useContext(SettingsContext);
   const { currencies, onUpdate, baseCurrency, refreshDelay, onLoading } = props;
 
-  const { prices = [], loading = false } = useGetPrices(
-    currencies,
-    baseCurrency,
-    refreshDelay
-  );
+  const {
+    prices = [],
+    loading = false,
+    error,
+  } = useGetPrices(currencies, baseCurrency, refreshDelay);
 
   useEffect(() => {
     prices && !loading && onUpdate();
@@ -59,15 +60,40 @@ const PricePage = (props: PricePageProps) => {
   }, [loading, prices]);
 
   if (loading) {
-    return <div>Loading...</div>;
+    return (
+      <Styles.CoinGrid items={0} theme={theme}>
+        <Styles.LoadingContainer>
+          <div className="loading-message">
+            Getting Prices&nbsp;&nbsp;
+            <Spinner size={"1rem"} />
+          </div>
+        </Styles.LoadingContainer>
+      </Styles.CoinGrid>
+    );
+  }
+
+  if (error) {
+    return (
+      <Styles.CoinGrid items={0} theme={theme}>
+        <Styles.LoadingContainer>          
+          <p className="error-message">
+            <Icon fill={"#EEE"} icon="warning" />
+            &nbsp;&nbsp;Failed to Load Price Data
+          </p>
+          <p className="description-message">
+            Please verify your Internet Connection.
+          </p>
+        </Styles.LoadingContainer>
+      </Styles.CoinGrid>
+    );
   }
 
   return (
     <Styles.CoinGrid items={prices.length} theme={theme}>
       {prices &&
         prices.map((price, index) => {
-          const priceVal = getPrice(baseCurrency, price);
-          const priceChange = getChange(baseCurrency, price);
+          const priceVal = !error ? getPrice(baseCurrency, price) : 0;
+          const priceChange = !error ? getChange(baseCurrency, price) : 0;
 
           return (
             <Styles.CoinItem key={index} theme={theme}>

@@ -32,14 +32,16 @@ const SectionContainer = styled.div`
     width: 100%;
     display: flex;
     flex-direction: row;
-    margin: 20px 10px 10px 10px;
+    margin: 10px 10px 10px 20px;
   }
 
   div.label-column {
-    color: #BBB;
+    color: #EEE;
     width: 230px;
     text-align: left;
-    font-size: 0.9rem;    
+    font-size: 0.9rem;   
+
+
   }
   div.value-column {
     font-weight: 300;
@@ -70,13 +72,13 @@ const SectionTitle = styled.div`
   width: 100%;
   font-size: 1rem;
   text-transform: uppercase;
-  color: #FFF;
+  color: #999;
   font-weight: 600;
   text-align: left;
   padding-bottom: 10px;
   border-bottom: 1px solid ${({ theme }) => themes.grey.globalSepColor};
   margin-bottom: 10px;
-  padding-left: 10px;
+
 `;
 
 const SectionBody = styled.div``;

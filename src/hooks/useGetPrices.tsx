@@ -11,7 +11,7 @@ export const useGetPrices = (
   const {
     get,
     loading = false,
-    error,
+    error  = false,
   } = useFetch(`https://api.coingecko.com`, {}, []);
 
   const currenciesReq = currencies.join(",");
