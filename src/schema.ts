@@ -10,10 +10,28 @@ export enum Theme {
   GREY = "grey"
 }
 
+export enum CoinId {
+  BITCOIN = "bitcoin",
+  BEPRO = "bepro-network",
+  ETHEREUM = "ethereum",
+  MOONBEAM = "moonbeam",
+  TELOS = "telos",
+  POLKADOT = "polkadot",
+  NEAR = "near",
+  DOGECOIN = "dogecoin"
+}
+
+
+export type CoinIdList = [
+  CoinId, CoinId, CoinId,CoinId,
+  CoinId, CoinId, CoinId,CoinId,
+];
+
 export interface Settings {
   baseCurrency: BaseCurrency;
   theme: Theme;
   refreshInterval: number;
+  coins: CoinIdList;
 }
 
 export interface PriceInfo {

@@ -38,7 +38,7 @@
       ],
       "identifier": "com.taikai.cripto-spy",
       "longDescription": "",
-      "macOS": {
+      "macOS": {        
         "entitlements": null,
         "exceptionDomain": "",
         "frameworks": [],
@@ -65,7 +65,7 @@
         "fullscreen": false,
         "height": 450,
         "resizable": true,
-        "title": "Crypto Spy",
+        "title": "Crypto Ticker",
         "width": 800
       }
     ]
